@@ -3,23 +3,29 @@ import requests
 from dotenv import load_dotenv
 import urllib.parse
 from image_download import download_images
+import argparse
 
 DEFAULT_PATH = 'image'
 
 
-def fetch_nasa_apod(token):
+def fetch_nasa_apod(apod_count, token):
+	if apod_count:
+		parser_count = apod_count
+	else:
+		parser_count = '5'
+
 	api_url = "https://api.nasa.gov/planetary/apod"
 	params = {
 		"api_key": token,
-		"count": 20
+		"count": f'{parser_count}'
 	}
 	response = requests.get(api_url, params=params)
 	response.raise_for_status()
 	return response.json()
 
 
-def save_nasa_apod_images(token):
-	nasa_response = fetch_nasa_apod(token)
+def save_nasa_apod_images(apod_count, token):
+	nasa_response = fetch_nasa_apod(apod_count, token)
 
 	if not os.path.exists(DEFAULT_PATH):
 		os.makedirs(DEFAULT_PATH)
@@ -39,12 +45,25 @@ def save_nasa_apod_images(token):
 
 		download_images(full_path, decoded_url)	
 	
+def create_parser():
+	parser = argparse.ArgumentParser(
+    description= 'Downloads NASA APOD images. Optionally specify number of images.'
+    )
+	parser.add_argument(
+		'count',
+		help='count',
+		nargs='?',
+		type=int,
+		default=None,
+	)
+	return parser
 
 def main():
 	load_dotenv()
-	demo_token = os.getenv('DEMO_KEY')
 	token = os.environ['TOKEN']
-	save_nasa_apod_images(token)
+	parser = create_parser()
+	apod_count = parser.parse_args().count
+	save_nasa_apod_images(apod_count, token)
 
 
 if __name__ == '__main__':
