@@ -5,14 +5,14 @@ import urllib.parse
 from image_download import download_images
 import argparse
 
-DEFAULT_PATH = 'image'
+DEFAULT_PATH = 'images'
 
 
 def fetch_space_x(space_x_launch_id):
 	if space_x_launch_id:
 		api_url = f'https://api.spacexdata.com/v5/launches/{space_x_launch_id}'
 	else:
-		api_url = 'https://api.spacexdata.com/v5/latest'
+		api_url = 'https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a'
 
 	response = requests.get(api_url)
 	response.raise_for_status()

@@ -5,7 +5,7 @@ import urllib.parse
 from image_download import download_images
 import argparse
 
-DEFAULT_PATH = 'image'
+DEFAULT_PATH = 'images'
 
 
 def fetch_nasa_apod(apod_count, token):
@@ -60,9 +60,12 @@ def create_parser():
 
 def main():
 	load_dotenv()
+
 	token = os.environ['TOKEN']
+
 	parser = create_parser()
 	apod_count = parser.parse_args().count
+	
 	save_nasa_apod_images(apod_count, token)
 
 

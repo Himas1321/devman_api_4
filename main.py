@@ -8,10 +8,12 @@ from epic import save_epic_images
 
 def main():
 	load_dotenv()
+	
 	token = os.environ['TOKEN']
-	save_space_x_images(token)
+
 	save_nasa_apod_images(token)
 	save_epic_images(token)
+	save_space_x_images(token)
 
 if __name__ == '__main__':
 	main()

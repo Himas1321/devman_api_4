@@ -5,7 +5,7 @@ import urllib.parse
 import datetime
 from image_download import download_images
 
-DEFAULT_PATH = 'image'
+DEFAULT_PATH = 'images'
 
 
 def fetch_epic_image_url(token):
@@ -61,7 +61,9 @@ def save_epic_images(token):
 
 def main():
   load_dotenv()
+
   token = os.environ['TOKEN']
+  
   save_epic_images(token)
 
 
