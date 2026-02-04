@@ -3,15 +3,15 @@ import requests
 from dotenv import load_dotenv
 import urllib.parse
 import datetime
-from image_download import download_images
+from utilities import download_images, get_file_extension_from_url
 
 DEFAULT_PATH = 'images'
 
 
-def fetch_epic_image_url(token):
+def fetch_epic_images_url(nasa_api_key):
   api_url = 'https://epic.gsfc.nasa.gov/api/natural'
   params = {
-    'api_key': token,
+    'api_key': nasa_api_key,
   }
 
   response = requests.get(api_url, params=params)
@@ -31,7 +31,7 @@ def fetch_epic_image_url(token):
       f'https://api.nasa.gov/EPIC/archive/natural/'
       f'{formatted_date}/png/'
       f'{image_name}.png'
-      f'?api_key={token}'
+      f'?api_key={nasa_api_key}'
     )
 
     all_urls.append(image_url)
@@ -39,32 +39,36 @@ def fetch_epic_image_url(token):
   return all_urls
 
 
-def save_epic_images(token):
-  epic_response = fetch_epic_image_url(token)
-
-  if not os.path.exists(DEFAULT_PATH):
-    os.makedirs(DEFAULT_PATH)
-
-  for image_number, epic_url in enumerate(epic_response, start=1):
-    parsed_url = urllib.parse.urlsplit(epic_url)
-    directory, filename = os.path.split(parsed_url.path)
-    name, file_extension  = os.path.splitext(filename)
+def get_epic_images(nasa_api_key):
+  epic_image_urls = fetch_epic_images_url(nasa_api_key)
+  images = []
+  for image_number, epic_url in enumerate(epic_image_urls, start=1):
+    file_extension = get_file_extension_from_url(epic_url)
 
     if not file_extension:
       continue
-  
-    filename = 'epic_' + str(image_number) + file_extension
-    full_path = os.path.join(DEFAULT_PATH, filename)
 
+    images.append((image_number, file_extension, epic_url))
+
+  return images
+
+
+def save_epic_images(nasa_api_key):
+  images = get_epic_images(nasa_api_key)
+  os.makedirs(DEFAULT_PATH, exist_ok=True)
+  
+  for image_number, file_extension, epic_url in images:
+    filename = f'epic_{image_number}{file_extension}'
+    full_path = os.path.join(DEFAULT_PATH, filename)
     download_images(full_path, epic_url) 
     
 
 def main():
   load_dotenv()
 
-  token = os.environ['TOKEN']
+  nasa_api_key = os.environ['NASA_API_KEY']
   
-  save_epic_images(token)
+  save_epic_images(nasa_api_key)
 
 
 if __name__ == '__main__':
