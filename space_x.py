@@ -5,9 +5,8 @@ from utilities import download_images, get_file_extension_from_url
 import argparse
 
 DEFAULT_PATH = 'images'
-DEFAULT_SPACEX_LAUNCH_ID = '5eb87d47ffd86e000604b38a'
 
-def fetch_space_x_images_url(space_x_launch_id=DEFAULT_SPACEX_LAUNCH_ID):
+def fetch_space_x_images_url(space_x_launch_id):
 	api_url = f'https://api.spacexdata.com/v5/launches/{space_x_launch_id}'
 	response = requests.get(api_url)
 	response.raise_for_status()
@@ -46,9 +45,10 @@ def create_parser():
     )
 	parser.add_argument(
 		'launch_id',
-		help='launch ID',
+		help='SpaceX launch ID (default: 5eb87d47ffd86e000604b38a)',
 		nargs='?',
 		type=str,
+		default='5eb87d47ffd86e000604b38a',
 	)
 	return parser
 

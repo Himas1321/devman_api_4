@@ -7,7 +7,7 @@ import argparse
 
 DEFAULT_PATH = 'images'
 
-def fetch_nasa_apod_images_url(nasa_api_key, apod_count=5):
+def fetch_nasa_apod_images_url(nasa_api_key, apod_count):
 	api_url = "https://api.nasa.gov/planetary/apod"
 	params = {
 		"api_key": nasa_api_key,
@@ -49,9 +49,10 @@ def create_parser():
     )
 	parser.add_argument(
 		'count',
-		help='count',
+		help='Number of images to download (default: 5)',
 		nargs='?',
-		type=int,
+		default=5,
+    	type=int,
 	)
 
 	return parser
@@ -62,7 +63,7 @@ def main():
 	nasa_api_key = os.environ['NASA_API_KEY']
 	
 	parser = create_parser()
-	apod_count = parser.parse_args().count or 5
+	apod_count = parser.parse_args().count
 
 	save_nasa_apod_images(nasa_api_key, apod_count)
 
