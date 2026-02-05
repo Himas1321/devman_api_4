@@ -9,8 +9,8 @@ pip install -r requirements.txt
 ```
 Для взаимодействия с API сервисов необходимо получить их API токены. Создайте в папке с проектом файл `.env` и добавляйте переменные с токенами в него, вот так:
 ```
-TOKEN=<ваш токен>
-TELEGRAM_TOKEN=<ваш телеграм токен>
+NASA_API_KEY=<ваш nasa токен>
+TELEGRAM_BOT_TOKEN=<ваш телеграм токен>
 TELEGRAM_CHAT_ID=<ваш чат айди>
 PUBLISH_DELAY=<время публикации>
 ```
