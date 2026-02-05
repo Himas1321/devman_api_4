@@ -15,8 +15,8 @@ TELEGRAM_CHAT_ID=<ваш чат айди>
 PUBLISH_DELAY=<время публикации>
 ```
 Какие переменные `.env` понадобятся:  
-- TOKEN: токен NASA API необходимо получить на сайте [NASA API APOD](https://api.nasa.gov/#apod).
-- TELEGRAM_TOKEN: необходимо получить в telegram у BotFather
+- NASA_API_KEY: токен NASA API необходимо получить на сайте [NASA API APOD](https://api.nasa.gov/#apod).
+- TELEGRAM_BOT_TOKEN: необходимо получить в telegram у BotFather
 - TELEGRAM_CHAT_ID: необходимо получить в telegram в вашем канале
 - PUBLISH_DELAY: указать время публикации в секндах. Пример: 60 секунд * 60 минут = 3600 секунд это равно 1 часу 
 
