@@ -40,7 +40,7 @@ def save_nasa_apod_images(images):
 	for image_number, file_extension, decoded_url in images:
 		filename = f'nasa_apod_{image_number}{file_extension}'
 		full_path = os.path.join(DEFAULT_PATH, filename)
-		download_images(full_path, decoded_url)	
+		downloads_images(full_path, decoded_url)	
 
 
 def create_parser():
@@ -66,8 +66,8 @@ def main():
 	apod_count = parser.parse_args().count
 
 	nasa_image_urls = fetch_nasa_apod_images_urls(nasa_api_key, apod_count)
-	images = get_apod_images(nasa_api_key, apod_count)
-	save_nasa_apod_images(nasa_api_key, apod_count)
+	images = get_apod_images(nasa_image_urls)
+	save_nasa_apod_images(images)
 
 	
 if __name__ == '__main__':

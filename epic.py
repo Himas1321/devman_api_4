@@ -6,6 +6,7 @@ import datetime
 from utilities import downloads_images, get_file_extension_from_url
 
 DEFAULT_PATH = 'images'
+EPIC_IMAGES_LIMIT = 5
 
 def fetch_epic_images_urls(nasa_api_key):
   api_url = 'https://epic.gsfc.nasa.gov/api/natural'
@@ -19,7 +20,7 @@ def fetch_epic_images_urls(nasa_api_key):
 
   all_urls = []
 
-  for epic_item in epic_items[:5]:
+  for epic_item in epic_items[:EPIC_IMAGES_LIMIT]:
     image_name = epic_item['image']
     date = epic_item['date']
 
@@ -58,7 +59,7 @@ def save_epic_images(images):
   for image_number, file_extension, epic_url in images:
     filename = f'epic_{image_number}{file_extension}'
     full_path = os.path.join(DEFAULT_PATH, filename)
-    download_images(full_path, epic_url) 
+    downloads_images(full_path, epic_url) 
     
 
 def main():
@@ -67,8 +68,8 @@ def main():
   nasa_api_key = os.environ['NASA_API_KEY']
   
   epic_image_urls = fetch_epic_images_urls(nasa_api_key)
-  images = get_epic_images(nasa_api_key)
-  save_epic_images(nasa_api_key)
+  images = get_epic_images(epic_image_urls)
+  save_epic_images(images)
 
 
 if __name__ == '__main__':

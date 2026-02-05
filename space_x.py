@@ -36,7 +36,7 @@ def save_space_x_images(images):
 	for image_number, file_extension, space_x_item in images:
 		filename = f'space_x_{image_number}{file_extension}'
 		full_path = os.path.join(DEFAULT_PATH, filename)
-		download_images(full_path, space_x_item)
+		downloads_images(full_path, space_x_item)
 
 
 def create_parser():
@@ -58,8 +58,8 @@ def main():
 	space_x_launch_id = parser.parse_args().launch_id
 
 	space_x_image_urls = fetch_space_x_images_urls(space_x_launch_id)
-	images = get_space_x_images(space_x_launch_id)
-	save_space_x_images(space_x_launch_id)
+	images = get_space_x_images(space_x_image_urls)
+	save_space_x_images(images)
 	
 
 if __name__ == '__main__':
