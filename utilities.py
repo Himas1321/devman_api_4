@@ -21,13 +21,4 @@ def get_file_extension_from_url(url):
   name, file_extension  = os.path.splitext(filename)
   return file_extension
 
-def main():
 
-  try:
-    download_images(full_path, item)
-
-  except requests.exceptions.RequestException:
-    print("Не удалось скачать")
-
-if __name__ == '__main__':
-  main()
