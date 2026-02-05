@@ -18,9 +18,9 @@ def fetch_nasa_apod_images_url(nasa_api_key, apod_count):
 	return response.json()
 
 
-def get_apod_images(nasa_api_key, apod_count):
-	nasa_image_urls = fetch_nasa_apod_images_url(nasa_api_key, apod_count)
+def get_apod_images(nasa_image_urls):
 	images = []
+	
 	for image_number, nasa_url in enumerate(nasa_image_urls, start=1):
 		decoded_url = urllib.parse.unquote(nasa_url['url'])
 		file_extension = get_file_extension_from_url(decoded_url)
@@ -33,8 +33,8 @@ def get_apod_images(nasa_api_key, apod_count):
 	return images
 
 
-def save_nasa_apod_images(nasa_api_key, apod_count):
-	images = get_apod_images(nasa_api_key, apod_count)
+def save_nasa_apod_images(images):
+	
 	os.makedirs(DEFAULT_PATH, exist_ok=True)
 	
 	for image_number, file_extension, decoded_url in images:
@@ -65,6 +65,8 @@ def main():
 	parser = create_parser()
 	apod_count = parser.parse_args().count
 
+	nasa_image_urls = fetch_nasa_apod_images_url(nasa_api_key, apod_count)
+	images = get_apod_images(nasa_api_key, apod_count)
 	save_nasa_apod_images(nasa_api_key, apod_count)
 
 	

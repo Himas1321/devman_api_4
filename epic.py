@@ -39,9 +39,9 @@ def fetch_epic_images_url(nasa_api_key):
   return all_urls
 
 
-def get_epic_images(nasa_api_key):
-  epic_image_urls = fetch_epic_images_url(nasa_api_key)
+def get_epic_images(epic_image_urls):
   images = []
+
   for image_number, epic_url in enumerate(epic_image_urls, start=1):
     file_extension = get_file_extension_from_url(epic_url)
 
@@ -53,8 +53,7 @@ def get_epic_images(nasa_api_key):
   return images
 
 
-def save_epic_images(nasa_api_key):
-  images = get_epic_images(nasa_api_key)
+def save_epic_images(images):
   os.makedirs(DEFAULT_PATH, exist_ok=True)
   
   for image_number, file_extension, epic_url in images:
@@ -68,6 +67,8 @@ def main():
 
   nasa_api_key = os.environ['NASA_API_KEY']
   
+  epic_image_urls = fetch_epic_images_url(nasa_api_key)
+  images = get_epic_images(nasa_api_key)
   save_epic_images(nasa_api_key)
 
 

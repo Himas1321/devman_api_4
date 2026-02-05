@@ -16,9 +16,9 @@ def fetch_space_x_images_url(space_x_launch_id):
 
 	return images
 
-def get_space_x_images(space_x_launch_id):
-	space_x_image_urls = fetch_space_x_images_url(space_x_launch_id)
+def get_space_x_images(space_x_image_urls):
 	images = []
+	
 	for image_number, space_x_item in enumerate(space_x_image_urls, start=1):
 		file_extension = get_file_extension_from_url(space_x_item)
 
@@ -29,8 +29,8 @@ def get_space_x_images(space_x_launch_id):
 
 	return images
 
-def save_space_x_images(space_x_launch_id):
-	images = get_space_x_images(space_x_launch_id)
+def save_space_x_images(images):
+	
 	os.makedirs(DEFAULT_PATH, exist_ok=True)
 
 	for image_number, file_extension, space_x_item in images:
@@ -57,6 +57,8 @@ def main():
 	parser = create_parser()
 	space_x_launch_id = parser.parse_args().launch_id
 
+	space_x_image_urls = fetch_space_x_images_url(space_x_launch_id)
+	images = get_space_x_images(space_x_launch_id)
 	save_space_x_images(space_x_launch_id)
 	
 
