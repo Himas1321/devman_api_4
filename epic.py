@@ -3,12 +3,11 @@ import requests
 from dotenv import load_dotenv
 import urllib.parse
 import datetime
-from utilities import download_images, get_file_extension_from_url
+from utilities import downloads_images, get_file_extension_from_url
 
 DEFAULT_PATH = 'images'
 
-
-def fetch_epic_images_url(nasa_api_key):
+def fetch_epic_images_urls(nasa_api_key):
   api_url = 'https://epic.gsfc.nasa.gov/api/natural'
   params = {
     'api_key': nasa_api_key,
@@ -67,7 +66,7 @@ def main():
 
   nasa_api_key = os.environ['NASA_API_KEY']
   
-  epic_image_urls = fetch_epic_images_url(nasa_api_key)
+  epic_image_urls = fetch_epic_images_urls(nasa_api_key)
   images = get_epic_images(nasa_api_key)
   save_epic_images(nasa_api_key)
 

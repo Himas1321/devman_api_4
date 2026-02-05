@@ -2,12 +2,12 @@ import os
 import requests
 from dotenv import load_dotenv
 import urllib.parse
-from utilities import download_images, get_file_extension_from_url
+from utilities import downloads_images, get_file_extension_from_url
 import argparse
 
 DEFAULT_PATH = 'images'
 
-def fetch_nasa_apod_images_url(nasa_api_key, apod_count):
+def fetch_nasa_apod_images_urls(nasa_api_key, apod_count):
 	api_url = "https://api.nasa.gov/planetary/apod"
 	params = {
 		"api_key": nasa_api_key,
@@ -20,7 +20,7 @@ def fetch_nasa_apod_images_url(nasa_api_key, apod_count):
 
 def get_apod_images(nasa_image_urls):
 	images = []
-	
+
 	for image_number, nasa_url in enumerate(nasa_image_urls, start=1):
 		decoded_url = urllib.parse.unquote(nasa_url['url'])
 		file_extension = get_file_extension_from_url(decoded_url)
@@ -65,7 +65,7 @@ def main():
 	parser = create_parser()
 	apod_count = parser.parse_args().count
 
-	nasa_image_urls = fetch_nasa_apod_images_url(nasa_api_key, apod_count)
+	nasa_image_urls = fetch_nasa_apod_images_urls(nasa_api_key, apod_count)
 	images = get_apod_images(nasa_api_key, apod_count)
 	save_nasa_apod_images(nasa_api_key, apod_count)
 

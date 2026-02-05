@@ -1,12 +1,12 @@
 import os
 import requests
 from dotenv import load_dotenv
-from utilities import download_images, get_file_extension_from_url
+from utilities import downloads_images, get_file_extension_from_url
 import argparse
 
 DEFAULT_PATH = 'images'
 
-def fetch_space_x_images_url(space_x_launch_id):
+def fetch_space_x_images_urls(space_x_launch_id):
 	api_url = f'https://api.spacexdata.com/v5/launches/{space_x_launch_id}'
 	response = requests.get(api_url)
 	response.raise_for_status()
@@ -18,7 +18,7 @@ def fetch_space_x_images_url(space_x_launch_id):
 
 def get_space_x_images(space_x_image_urls):
 	images = []
-	
+
 	for image_number, space_x_item in enumerate(space_x_image_urls, start=1):
 		file_extension = get_file_extension_from_url(space_x_item)
 
@@ -57,7 +57,7 @@ def main():
 	parser = create_parser()
 	space_x_launch_id = parser.parse_args().launch_id
 
-	space_x_image_urls = fetch_space_x_images_url(space_x_launch_id)
+	space_x_image_urls = fetch_space_x_images_urls(space_x_launch_id)
 	images = get_space_x_images(space_x_launch_id)
 	save_space_x_images(space_x_launch_id)
 	

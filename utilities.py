@@ -2,7 +2,7 @@ import os
 import requests
 import urllib.parse
 
-def download_images(full_path, item):
+def downloads_images(full_path, item):
   headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
   }
