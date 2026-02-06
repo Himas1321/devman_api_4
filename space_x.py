@@ -11,13 +11,14 @@ def fetch_space_x_images_urls(space_x_launch_id):
 	response = requests.get(api_url)
 	response.raise_for_status()
 	launches = response.json()
-
 	images = launches['links']['flickr']['original']
 
 	return images
 
-def get_space_x_images(space_x_image_urls):
-	images = []
+
+def save_space_x_images(space_x_image_urls):
+	
+	os.makedirs(DEFAULT_PATH, exist_ok=True)
 
 	for image_number, space_x_item in enumerate(space_x_image_urls, start=1):
 		file_extension = get_file_extension_from_url(space_x_item)
@@ -25,15 +26,6 @@ def get_space_x_images(space_x_image_urls):
 		if not file_extension:
 			continue
 
-		images.append((image_number, file_extension, space_x_item))
-
-	return images
-
-def save_space_x_images(images):
-	
-	os.makedirs(DEFAULT_PATH, exist_ok=True)
-
-	for image_number, file_extension, space_x_item in images:
 		filename = f'space_x_{image_number}{file_extension}'
 		full_path = os.path.join(DEFAULT_PATH, filename)
 		downloads_images(full_path, space_x_item)
@@ -58,8 +50,7 @@ def main():
 	space_x_launch_id = parser.parse_args().launch_id
 
 	space_x_image_urls = fetch_space_x_images_urls(space_x_launch_id)
-	images = get_space_x_images(space_x_image_urls)
-	save_space_x_images(images)
+	save_space_x_images(space_x_image_urls)
 	
 
 if __name__ == '__main__':
