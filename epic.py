@@ -3,7 +3,7 @@ import requests
 from dotenv import load_dotenv
 import urllib.parse
 import datetime
-from utilities import downloads_images, get_file_extension_from_url
+from utilities import download_image, get_file_extension_from_url
 
 DEFAULT_PATH = 'images'
 EPIC_IMAGES_LIMIT = 5
@@ -52,7 +52,7 @@ def save_epic_images(epic_image_urls):
   
     filename = f'epic_{image_number}{file_extension}'
     full_path = os.path.join(DEFAULT_PATH, filename)
-    downloads_images(full_path, epic_url) 
+    download_image(full_path, epic_url) 
     
 
 def main():

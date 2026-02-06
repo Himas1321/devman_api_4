@@ -1,7 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv
-from utilities import downloads_images, get_file_extension_from_url
+from utilities import download_image, get_file_extension_from_url
 import argparse
 
 DEFAULT_PATH = 'images'
@@ -28,7 +28,7 @@ def save_space_x_images(space_x_image_urls):
 
 		filename = f'space_x_{image_number}{file_extension}'
 		full_path = os.path.join(DEFAULT_PATH, filename)
-		downloads_images(full_path, space_x_item)
+		download_image(full_path, space_x_item)
 
 
 def create_parser():

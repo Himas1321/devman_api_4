@@ -2,7 +2,7 @@ import os
 import requests
 from dotenv import load_dotenv
 import urllib.parse
-from utilities import downloads_images, get_file_extension_from_url
+from utilities import download_image, get_file_extension_from_url
 import argparse
 
 DEFAULT_PATH = 'images'
@@ -30,7 +30,7 @@ def save_nasa_apod_images(nasa_image_urls):
 	
 		filename = f'nasa_apod_{image_number}{file_extension}'
 		full_path = os.path.join(DEFAULT_PATH, filename)
-		downloads_images(full_path, decoded_url)	
+		download_image(full_path, decoded_url)	
 
 
 def create_parser():
